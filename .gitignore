@@ -1,6 +1,23 @@
-composer.phar
+composer.lock
+/var/
+!var/cache/.gitkeep
+!var/logs/.gitkeep
 /vendor/
+/build/
+/.idea/
+.buildpath
+.project
+/.settings/
+/nbproject/
+/node_modules/*
+files
+*@eaDir*
+.DS_Store
+*~
 
-# Commit your application's lock file https://getcomposer.org/doc/01-basic-usage.md#commit-your-composer-lock-file-to-version-control
-# You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
-# composer.lock
+###> symfony/framework-bundle ###
+.env
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
