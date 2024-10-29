@@ -1,16 +1,16 @@
 <?php
-namespace LuanOldCode;
+namespace ForgePDF;
 use Exception;
-use Fpdf\Fpdf;
+use ForgePDF\ForgePDFTab;
 /*******************************************************************************
  * ForgePDF                                                                     *
  *                                                                              *
  * Version: 1.00                                                                *
- * Date:    2024-10-18                                                          *
+ * Date:    2024-10-29                                                          *
  * Author:  Luan Costa                                                          *
  *******************************************************************************/
 
-class ForgePDF extends Fpdf
+class ForgePDF extends ForgePDFTab
 {
     const VERSION = "1.00";
 

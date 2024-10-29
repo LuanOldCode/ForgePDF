@@ -11,7 +11,7 @@ Currently uses FPDF 1.00.
 Add to your "__composer.json__" file under the "__require__" section:
 
 ```
-"LuanOldCode/forgepdf": "^1.00"
+"ForgePDF\ForgePDF": "^1.00"
 ```
 
 
@@ -28,7 +28,7 @@ php composer.phar update
 In your php file that you want to use the class add a use statement.
 
 ```php
-use LuanOldCode\Fpdf;
+use ForgePDF\ForgePDF;
 ```
 
 Then use as per the FPDF documentation.
