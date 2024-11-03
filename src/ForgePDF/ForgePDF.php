@@ -15,6 +15,18 @@ class ForgePDF extends ForgePDFTab
     const VERSION = "1.00";
 
     protected $f;
+
+    /**
+     * Opens or creates a PDF file for writing.
+     *
+     * This function initializes a writable file stream to output a PDF document.
+     * It attempts to create the specified file (defaulting to "doc.pdf") and triggers
+     * an error if the file cannot be created. After opening the file, it writes the
+     * necessary PDF header information.
+     *
+     * @param string $file Name of the PDF file to be created or opened (default is "doc.pdf").
+     * @throws Exception if the file cannot be created or opened.
+     */
     public function Open($file = "doc.pdf")
     {
         $this->f = fopen($file, "wb");
@@ -24,6 +36,25 @@ class ForgePDF extends ForgePDFTab
         $this->_putheader();
     }
 
+    /**
+     * Adds an image to the PDF at the specified position and dimensions.
+     *
+     * This function checks if the image file has already been loaded; if not,
+     * it retrieves the image's dimensions and type, storing this data for future use.
+     * If the image file is missing or invalid, an error is triggered.
+     * After verification, the image is inserted into the PDF at the provided coordinates
+     * and dimensions, or defaults if not specified.
+     *
+     * @param string $file Path to the image file.
+     * @param float|null $x The x-coordinate for the image's position in the document (default is the current x position).
+     * @param float|null $y The y-coordinate for the image's position in the document (default is the current y position).
+     * @param float $w Width of the image in the document (default is auto-scaled based on the image's original aspect ratio).
+     * @param float $h Height of the image in the document (default is auto-scaled based on the image's original aspect ratio).
+     * @param string $type Image type (e.g., 'JPG', 'PNG'); if empty, it will be auto-detected based on the file extension.
+     * @param string $link URL or internal link associated with the image (optional).
+     *
+     * @throws Exception if the image file is missing or not a valid image format.
+     */
     public function Image(
         $file,
         $x = null,
@@ -48,6 +79,20 @@ class ForgePDF extends ForgePDFTab
         parent::Image($file, $x, $y, $w, $h, $type, $link);
     }
 
+    /**
+     * Outputs the PDF document to the specified destination.
+     *
+     * This function finalizes the PDF document and sends it to the chosen output
+     * destination (e.g., browser, file, or string). If the document has not been fully
+     * generated (state less than 3), it closes the document to ensure all content is
+     * properly written before outputting.
+     *
+     * @param string $dest Destination for the output: 'I' for inline in the browser,
+     *                     'D' for download, 'F' for saving to a file, and 'S' for returning as a string.
+     *                     Default is empty, which uses the class's standard output destination.
+     * @param string $name Name of the output file. Relevant when $dest is 'D' or 'F'.
+     * @param bool $isUTF8 Indicates if the file name is UTF-8 encoded. Default is false.
+     */
     public function Outpute($dest = "", $name = "", $isUTF8 = false)
     {
         if ($this->state < 3) {
