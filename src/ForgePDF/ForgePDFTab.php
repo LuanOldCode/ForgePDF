@@ -13,14 +13,14 @@ use Fpdf\Fpdf;
 
 class ForgePDFTab extends Fpdf
 {
-    // Atributos protegidos que controlam larguras e alinhamentos das colunas.
+    // Protected attributes controlling column widths and alignments.
     protected $widths;
     protected $aligns;
 
     /**
-     * Define a largura de cada coluna para a tabela.
+     * Sets the width of each column for the table.
      *
-     * @param array $w Array com as larguras das colunas.
+     * @param array $w Array with the column widths.
      */
     public function SetWidths($w)
     {
@@ -28,9 +28,9 @@ class ForgePDFTab extends Fpdf
     }
 
     /**
-     * Define o alinhamento de cada coluna para a tabela.
+     * Sets the alignment of each column for the table.
      *
-     * @param array $a Array com alinhamentos (L - Esquerda, C - Centro, R - Direita).
+     * @param array $a Array with alignments (L - Left, C - Center, R - Right).
      */
     public function SetAligns($a)
     {
@@ -38,14 +38,14 @@ class ForgePDFTab extends Fpdf
     }
 
     /**
-     * Cria uma linha com células ajustadas automaticamente ao conteúdo.
+     * Creates a row with cells adjusted automatically to the content.
      *
-     * @param array $data Conteúdo de cada célula da linha.
+     * @param array $data Content of each cell in the row.
      */
     public function Row($data)
     {
         $nb = 0;
-        // Calcula o número máximo de linhas necessárias para cada célula.
+        // Calculates the maximum number of lines needed for each cell.
         for ($i = 0; $i < count($data); $i++) {
             $nb = max($nb, $this->NbLines($this->widths[$i], $data[$i]));
         }
@@ -56,36 +56,36 @@ class ForgePDFTab extends Fpdf
             $a = isset($this->aligns[$i]) ? $this->aligns[$i] : "L";
             $x = $this->GetX();
             $y = $this->GetY();
-            $this->Rect($x, $y, $w, $h); // Desenha o contorno da célula.
-            $this->MultiCell($w, 5, $data[$i], 0, $a); // Insere o texto com alinhamento.
+            $this->Rect($x, $y, $w, $h); // Draws the cell border.
+            $this->MultiCell($w, 5, $data[$i], 0, $a); // Inserts text with alignment.
             $this->SetXY($x + $w, $y);
         }
         $this->Ln($h);
     }
 
     /**
-     * Verifica se há necessidade de quebra de página, caso a altura da linha ultrapasse o limite da página.
+     * Checks if a page break is needed, if the row height exceeds the page limit.
      *
-     * @param int $h Altura total da linha.
+     * @param int $h Total height of the row.
      */
     private function CheckPageBreak($h)
     {
         if ($this->GetY() + $h > $this->PageBreakTrigger) {
-            $this->AddPage($this->CurOrientation); // Adiciona nova página, se necessário.
+            $this->AddPage($this->CurOrientation); // Adds a new page if needed.
         }
     }
 
     /**
-     * Calcula o número de linhas necessárias para uma célula com base na largura da célula e no texto.
+     * Calculates the number of lines needed for a cell based on cell width and text.
      *
-     * @param int $w Largura da célula.
-     * @param string $txt Texto que será inserido na célula.
-     * @return int Número de linhas necessárias.
+     * @param int $w Cell width.
+     * @param string $txt Text to be inserted in the cell.
+     * @return int Number of lines needed.
      */
     private function NbLines($w, $txt)
     {
         if (!isset($this->CurrentFont)) {
-            $this->Error("No font has been set"); // Gera erro se nenhuma fonte estiver definida.
+            $this->Error("No font has been set"); // Triggers error if no font is set.
         }
         $cw = $this->CurrentFont["cw"];
         if ($w == 0) {
